@@ -7,15 +7,15 @@ Final OOP project assignment. A professional desktop application for managing us
 
 ### 1. Authorization Window
 Modern and compact login interface with role-based access control.
-![Login Window](screenshots/Login.png)
+![Login Window](screenshots/login.png)
 
 ### 2. Main Dashboard
 macOS-style responsive interface with full CRUD support and data table.
-![Main Menu](screenshots/MainMenu.png)
+![Main Menu](screenshots/mainmenu.png)
 
 ### 3. Database Management (pgAdmin)
 Data persistence layer using PostgreSQL.
-![Database](screenshots/Database.png)
+![Database](screenshots/database.png)
 
 ## 🧬 OOP Principles Demonstrated
 - **Encapsulation:** Private fields and public getters/setters in models.
@@ -35,3 +35,4 @@ CREATE TABLE feedback (
     message TEXT,
     deleted BOOLEAN DEFAULT FALSE
 );
+Link to Presentation : https://canva.link/4pjsvym0ozki8l2
