@@ -1,4 +1,4 @@
-# 🚀 Feedback System PRO
+# 🚀 Feedback System 
 
 ## 📌 Project Overview
 Final OOP project assignment. A professional desktop application for managing user feedback with role-based access and database persistence.
