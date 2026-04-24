@@ -18,15 +18,21 @@ public class GUI {
     }
 
     public static void startApp() {
+        // 1. Показываем логин
         LoginGUI.show();
 
-        frame = new JFrame("Feedback System");
+        // 2. ФИКС: Если роль не выбрана (окно закрыли), выходим
+        if (LoginGUI.role == null || LoginGUI.role.isEmpty()) {
+            System.exit(0);
+        }
+
+        frame = new JFrame("Feedback System PRO");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1100, 800);
         frame.setLocationRelativeTo(null);
         frame.getContentPane().setBackground(new Color(242, 242, 247));
 
-        // Основной контейнер (BorderLayout)
+        // Главный контейнер
         JPanel root = new JPanel(new BorderLayout(20, 20));
         root.setOpaque(false);
         root.setBorder(new EmptyBorder(20, 25, 20, 25));
@@ -40,9 +46,9 @@ public class GUI {
         JButton logoutBtn = createMacBtn("Logout ⎋", new Color(142, 142, 147));
         logoutBtn.setPreferredSize(new Dimension(100, 35));
         logoutBtn.addActionListener(e -> {
-            frame.dispose();
-            LoginGUI.role = "";
-            startApp();
+            frame.dispose(); // Закрываем основное окно
+            LoginGUI.role = ""; // Сбрасываем роль
+            startApp(); // Запускаем заново
         });
         header.add(title, BorderLayout.WEST);
         header.add(logoutBtn, BorderLayout.EAST);
@@ -67,14 +73,14 @@ public class GUI {
         addInputRow(inputCard, "📧 Email", emailF, gbc, 1);
         addInputRow(inputCard, "💬 Message", msgF, gbc, 2);
 
-        // Кнопки Save/Add
+        // Кнопки управления
         JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 0));
         actions.setOpaque(false);
-        JButton addBtn = createMacBtn("Add Feedback", new Color(0, 122, 255));
+        JButton addBtn = createMacBtn("Add Record", new Color(0, 122, 255));
         JButton updateBtn = createMacBtn("Save Changes", new Color(88, 86, 214));
         actions.add(updateBtn); actions.add(addBtn);
 
-        // Собираем верхнюю часть
+        // Сборка верхней части (ФИКС ОШИБКИ LAYOUT)
         JPanel topWrapper = new JPanel(new BorderLayout(0, 15));
         topWrapper.setOpaque(false);
         topWrapper.add(header, BorderLayout.NORTH);
@@ -85,6 +91,8 @@ public class GUI {
         model = new DefaultTableModel(new String[]{"ID", "Name", "Email", "Message"}, 0);
         table = new JTable(model);
         table.setRowHeight(35);
+
+        // 🔥 АВТОЗАПОЛНЕНИЕ ПРИ ВЫБОРЕ
         table.getSelectionModel().addListSelectionListener(e -> {
             int r = table.getSelectedRow();
             if (r != -1) {
@@ -105,12 +113,12 @@ public class GUI {
         JButton impBtn = createMacBtn("Import CSV", Color.BLACK);
         bottom.add(delBtn); bottom.add(trashBtn); bottom.add(refBtn); bottom.add(expBtn); bottom.add(impBtn);
 
-        // Финальная сборка в root (ИСПОЛЬЗУЕМ СТРОКИ-КОНСТАНТЫ)
+        // Сборка в root
         root.add(topWrapper, BorderLayout.NORTH);
         root.add(scroll, BorderLayout.CENTER);
         root.add(bottom, BorderLayout.SOUTH);
 
-        // Логика
+        // Логика кнопок
         addBtn.addActionListener(e -> { DatabaseService.addFeedback(nameF.getText(), emailF.getText(), msgF.getText()); load(); });
         updateBtn.addActionListener(e -> {
             int r = table.getSelectedRow();
@@ -119,7 +127,7 @@ public class GUI {
         delBtn.addActionListener(e -> {
             int r = table.getSelectedRow();
             if (r != -1) {
-                int confirm = JOptionPane.showConfirmDialog(frame, "Move to Trash?", "Confirm", JOptionPane.YES_NO_OPTION);
+                int confirm = JOptionPane.showConfirmDialog(frame, "Move to Trash?", "Admin Confirm", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) { DatabaseService.softDelete((int)model.getValueAt(r,0)); load(); }
             }
         });
@@ -147,8 +155,7 @@ public class GUI {
         f.setPreferredSize(new Dimension(200, 40));
         f.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(210, 210, 215), 1, true),
-                BorderFactory.createEmptyBorder(5, 10, 5, 10)
-        ));
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)));
         return f;
     }
 
@@ -159,6 +166,7 @@ public class GUI {
         b.setForeground(Color.WHITE);
         b.setOpaque(true);
         b.setBorderPainted(false);
+        b.setCursor(new Cursor(Cursor.HAND_CURSOR));
         return b;
     }
 
