@@ -3,23 +3,28 @@
 ## 📌 Project Overview
 Final OOP project assignment. A professional desktop application for managing user feedback with role-based access and database persistence.
 
-## 🛠 Features
-- **Full CRUD:** Create, Read, Update, and Soft-Delete feedback.
-- **Role System:** Authorization for `ADMIN` and `USER`.
-- **Trash Bin:** Restore deleted records.
-- **Data Persistence:** Uses PostgreSQL and CSV Export/Import.
-- **Mac-Style GUI:** Modern, responsive interface.
+## 🖼 Screenshots
+
+### 1. Authorization Window
+Modern and compact login interface with role-based access control.
+![Login Window](screenshots/Login.png)
+
+### 2. Main Dashboard
+macOS-style responsive interface with full CRUD support and data table.
+![Main Menu](screenshots/MainMenu.png)
+
+### 3. Database Management (pgAdmin)
+Data persistence layer using PostgreSQL.
+![Database](screenshots/Database.png)
 
 ## 🧬 OOP Principles Demonstrated
-1. **Encapsulation:** All model fields are private with public getters/setters.
-2. **Inheritance:** `Admin` class extends `User`.
-3. **Polymorphism:** Method `showMenu()` is overridden in `Admin`.
-4. **Abstraction:** Logic is separated into Services and Models.
+- **Encapsulation:** Private fields and public getters/setters in models.
+- **Inheritance:** `Admin` extends `User`.
+- **Polymorphism:** Overridden `showMenu()` method for different user roles.
 
 ## ⚙️ Setup & Requirements
 - **Java:** JDK 17+
 - **Database:** PostgreSQL (port 5433)
-- **Library:** [PostgreSQL JDBC Driver](https://jdbc.postgresql.org/download/)
 
 ### SQL Setup:
 ```sql
