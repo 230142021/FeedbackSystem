@@ -10,50 +10,70 @@ public class LoginGUI {
     public static String role = "";
 
     public static void show() {
-        role = ""; // Сбрасываем при каждом вызове
-        JDialog dialog = new JDialog((Frame) null, "Sign In", true);
-        dialog.setSize(320, 300);
-        dialog.setLocationRelativeTo(null);
-        dialog.getContentPane().setBackground(new Color(236, 236, 236));
+        role = ""; // Сброс роли при открытии
 
+        JDialog dialog = new JDialog((Frame) null, "Sign In", true);
+        dialog.getContentPane().setBackground(new Color(236, 236, 236));
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+        // Главная панель с GridBagLayout
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setOpaque(false);
-        panel.setBorder(new EmptyBorder(20, 25, 20, 25));
+        panel.setBorder(new EmptyBorder(30, 30, 30, 30));
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(5, 0, 5, 0);
+        gbc.insets = new Insets(8, 5, 8, 5);
 
-        JTextField userField = new JTextField();
-        userField.setPreferredSize(new Dimension(200, 30));
-        JPasswordField passField = new JPasswordField();
-        passField.setPreferredSize(new Dimension(200, 30));
+        // Поля ввода с указанием ширины (columns)
+        JTextField userField = new JTextField(15);
+        JPasswordField passField = new JPasswordField(15);
 
-        gbc.gridy = 0; panel.add(new JLabel("Username:"), gbc);
-        gbc.gridy = 1; panel.add(userField, gbc);
-        gbc.gridy = 2; panel.add(new JLabel("Password:"), gbc);
-        gbc.gridy = 3; panel.add(passField, gbc);
+        // Добавляем компоненты на панель
+        gbc.gridx = 0; gbc.gridy = 0;
+        panel.add(new JLabel("Username:"), gbc);
 
-        JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        gbc.gridy = 1;
+        panel.add(userField, gbc);
+
+        gbc.gridy = 2;
+        panel.add(new JLabel("Password:"), gbc);
+
+        gbc.gridy = 3;
+        panel.add(passField, gbc);
+
+        // Панель кнопок
+        JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         buttons.setOpaque(false);
+
+        JButton cancelBtn = new JButton("Cancel");
         JButton loginBtn = new JButton("Login");
+
+        // Стиль основной кнопки (синяя Mac-style)
         loginBtn.setBackground(new Color(0, 122, 255));
         loginBtn.setForeground(Color.WHITE);
         loginBtn.setOpaque(true);
         loginBtn.setBorderPainted(false);
+        loginBtn.setFocusPainted(false);
+        loginBtn.setFont(new Font(".AppleSystemUIFont", Font.BOLD, 13));
 
+        buttons.add(cancelBtn);
         buttons.add(loginBtn);
-        gbc.gridy = 4; panel.add(buttons, gbc);
 
+        gbc.gridy = 4;
+        gbc.insets = new Insets(20, 0, 0, 0);
+        panel.add(buttons, gbc);
+
+        // Логика кнопок
         loginBtn.addActionListener(e -> {
             String u = userField.getText();
             String p = new String(passField.getPassword());
 
-            User currentUser; // Полиморфная переменная
-
+            User currentUser;
             if (u.equals("admin") && p.equals("123")) {
                 role = "ADMIN";
                 currentUser = new Admin(u, p);
-                currentUser.showMenu(); // Вызов переопределенного метода
+                currentUser.showMenu(); // Демонстрация полиморфизма в консоли
                 dialog.dispose();
             } else if (u.equals("user") && p.equals("123")) {
                 role = "USER";
@@ -61,10 +81,19 @@ public class LoginGUI {
                 currentUser.showMenu();
                 dialog.dispose();
             } else {
-                JOptionPane.showMessageDialog(dialog, "Access Denied");
+                JOptionPane.showMessageDialog(dialog, "Access Denied", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
-        dialog.setVisible(true);
+        cancelBtn.addActionListener(e -> System.exit(0));
+
+        // Добавляем панель в диалог
+        dialog.add(panel);
+
+        // ВАЖНО: Фикс пустой отрисовки
+        dialog.pack();                   // Устанавливает размер под компоненты
+        dialog.setLocationRelativeTo(null); // Центрирует
+        dialog.setResizable(false);
+        dialog.setVisible(true);         // Показывает только после сборки
     }
 }

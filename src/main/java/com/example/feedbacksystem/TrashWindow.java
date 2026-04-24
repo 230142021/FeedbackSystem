@@ -21,7 +21,7 @@ public class TrashWindow {
 
         JButton restoreBtn = new JButton("Restore Selected Feedback");
         restoreBtn.setBackground(new Color(88, 86, 214));
-        restoreBtn.setForeground(Color.WHITE);
+        restoreBtn.setForeground(Color.BLACK);
 
         restoreBtn.addActionListener(e -> {
             int row = table.getSelectedRow();
