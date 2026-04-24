@@ -4,7 +4,7 @@
 Final OOP project assignment. A professional desktop application for managing user feedback with role-based access and database persistence.
 
 ### 📽 Presentation
-You can view the project presentation here: [Feedback System PRO - Canva Presentation](https://canva.link/4pjsvym0ozki8l2)
+You can view the project presentation here: [Feedback System  - Canva Presentation](https://canva.link/4pjsvym0ozki8l2)
 
 ## 🖼 Screenshots
 
