@@ -14,7 +14,7 @@ Modern and compact login interface with role-based access control.
 
 ### 2. Main Dashboard
 macOS-style responsive interface with full CRUD support and data table.
-![Main Menu](screenshots/mainnmenu.png)
+![Main Menu](screenshots/mainmenu.png)
 
 ### 3. Database Management (pgAdmin)
 Data persistence layer using PostgreSQL.
